@@ -15,7 +15,6 @@
             align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             
-            /* CONFIGURACIÓN DEL FONDO DESLIZANTE */
             background-image: url('fondo2.png'); 
             background-size: auto 100%; 
             background-repeat: repeat-x; 
@@ -28,7 +27,6 @@
             to { background-position: -2000px 0; } 
         }
 
-        /* RECUADRO BLANCO (La Tarjeta) */
         #card {
             background: white;
             padding: 2.5rem;
@@ -123,7 +121,6 @@
         const content = document.getElementById('content');
         let haEmpezadoAHuir = false;
 
-        // Lógica de navegación entre "Hojas"
         function celebrar() {
             confetti({
                 particleCount: 150,
@@ -168,7 +165,6 @@
             `;
         }
 
-        // Lógica del botón "No"
         function moverBotonNo() {
             if (!haEmpezadoAHuir) {
                 btnNo.style.position = 'fixed';
@@ -195,4 +191,5 @@
         btnSi.addEventListener('click', celebrar);
     </script>
 </body>
+
 </html>
