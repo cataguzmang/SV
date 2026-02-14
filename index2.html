@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Especial</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* CONFIGURACIÓN DEL FONDO DESLIZANTE */
+            background-image: url('fondo2.png'); 
+            background-size: auto 100%; 
+            background-repeat: repeat-x; 
+            animation: deslizarHorizontal 60s linear infinite;
+            overflow: hidden;
+        }
+
+        @keyframes deslizarHorizontal {
+            from { background-position: 0 0; }
+            to { background-position: -2000px 0; } 
+        }
+
+        /* RECUADRO BLANCO (La Tarjeta) */
+        #card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 85%;
+            z-index: 10;
+            position: relative;
+            max-height: 90vh; 
+            overflow-y: auto;
+        }
+
+        .gif-container img {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 15px; 
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        #btn-si {
+            background-color: #ff4b5c;
+            color: white;
+        }
+
+        #btn-si:hover { transform: scale(1.1); }
+
+        #btn-no {
+            background-color: #e0e0e0;
+            color: #666;
+            position: relative;
+            z-index: 999;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="card">
+        <div id="content">
+            <div class="gif-container">
+                <img id="main-gif" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXc0NTJhMzJ6NXlnd3VobWU4aml5OGgwdHVzbXJnMG0xbGN1eHRqMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kDg0PNwd1O0kmiWM9u/giphy.gif" alt="Invitación">
+            </div>
+            <h1>¿Te gustaría ser mi San Valentin? (Ojala digas que si)🤞❤️</h1>
+            <div class="buttons-container">
+                <div style="width: 120px;">
+                    <button id="btn-si">Sii 🔥</button>
+                </div>
+                <div style="width: 120px;">
+                    <button id="btn-no">No 😞</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnSi = document.getElementById('btn-si');
+        const btnNo = document.getElementById('btn-no');
+        const content = document.getElementById('content');
+        let haEmpezadoAHuir = false;
+
+        // Lógica de navegación entre "Hojas"
+        function celebrar() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            content.classList.add('fade-in');
+            mostrarMenuOpciones();
+        }
+
+        function mostrarMenuOpciones() {
+            setTimeout(() => {
+                content.innerHTML = `
+                    <div class="gif-container">
+                        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzJndzluOHRxcGQ4NGNoaWM0Yzc0M3RzY2trYzRmMXFmcjh0OTRwYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dcjXtLmMMw5gc/giphy.gif" 
+                             style="max-height: 150px; width: auto; margin: 0 auto; display: block;">
+                    </div>
+                    <h1 style="font-size: 1.3rem; margin-bottom: 1.5rem;">¡Ajaaa! Sabía que sí 😉<br>¿Qué prefieres hacer?</h1>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <button onclick="mostrarPlan('A')" style="background-color: #4ecdc4; color: white; width: 250px;">Opción A: Ver Pelis 🍿</button>
+                        <button onclick="mostrarPlan('B')" style="background-color: #9b59b6; color: white; width: 250px;">Opción B: Jugar algo 🎮</button>
+                        <button onclick="location.reload()" style="background-color: transparent; color: #999; font-size: 0.8rem; border: 1px solid #ddd; padding: 5px 15px; margin-top: 10px;">← Volver al inicio</button>
+                    </div>
+                `;
+            }, 100);
+        }
+
+        function mostrarPlan(tipo) {
+            let mensaje = tipo === 'A' ? "Noche de pelis y dulcecitos! 🍿✨" : "Noche de rateo intenso! 🎮🔥";
+            let gifUrl = tipo === 'A' ? 
+                "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWM5dGRqOXE5a21wOHV6M3dnNmhleDJjdTh3dW5hODBtdDFqcWcxayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PjHaP4WaHHG5QgQVxc/giphy.gif" : 
+                "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYThxZXZ0aHZwaWc5dnFidnIzYnh5ZG1oZWdya2NqZWN2MmZncGEyNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6DyIIAtbrfgs6sfWzE/giphy.gif";
+
+            content.innerHTML = `
+                <div class="gif-container">
+                    <img src="${gifUrl}" style="max-height: 150px; width: auto; margin: 0 auto; display: block;">
+                </div>
+                <h1 style="font-size: 1.4rem;">${mensaje}</h1>
+                <p style="color: #666;">Esoooo! Te espero a las 5:00 PM (CHL) en Citas💘, gracias a nuestro querido proveedor: Discord.</p>
+                <button onclick="mostrarMenuOpciones()" style="background-color: #ff4b5c; color: white; margin-top: 10px;">← Cambiar de plan</button>
+            `;
+        }
+
+        // Lógica del botón "No"
+        function moverBotonNo() {
+            if (!haEmpezadoAHuir) {
+                btnNo.style.position = 'fixed';
+                haEmpezadoAHuir = true;
+            }
+            const padding = 50;
+            const maxX = window.innerWidth - btnNo.clientWidth - padding;
+            const maxY = window.innerHeight - btnNo.clientHeight - padding;
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const btnRect = btnNo.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+            const distancia = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
+            if (distancia < 100) { moverBotonNo(); }
+        });
+
+        btnNo.addEventListener('click', celebrar);
+        btnSi.addEventListener('click', celebrar);
+    </script>
+</body>
+</html>
